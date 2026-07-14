@@ -1,0 +1,30 @@
+# --- Terraform ---
+
+# Local state and backend files
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+.terraform/
+
+# --- Python ---
+
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# --- Project Packages  ---
+
+lambda.zip
+
+# --- OS & IDE Files ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
