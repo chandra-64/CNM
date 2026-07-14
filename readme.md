@@ -17,7 +17,7 @@
 
 </p>
 
-An end-to-end **serverless cloud project** that provisions a complete **Book Directory API** using Infrastructure as Code and demonstrates a production-style **observability pipeline** with real-time traffic generation and monitoring.
+An end-to-end **Cloud Network & Monitoring project** that provisions a complete **Book Directory API** using Infrastructure as Code and demonstrates a production-style **observability pipeline** with real-time traffic generation and monitoring.
 
 The entire environment runs locally using **Floci**, making it ideal for learning AWS serverless architecture without requiring an AWS account.
 
@@ -63,7 +63,7 @@ Grafana Dashboard
 
 ---
 
-# 📸 Architecture Diagram
+# Architecture Diagram
 
 <p align="center">
   <img src="assets/diagram.png" width="900" alt="Architecture Diagram">
@@ -83,13 +83,18 @@ Grafana Dashboard
 
 ![Traffic Simulator](assets/traffic-simulator.jpeg)
 
+## Floci
+
+![Floci](assets/floci.jpeg)
+
+
 ---
 
 # 🛠️ Technology Stack
 
 | Category | Technology |
 |----------|------------|
-| Cloud Emulation | Floci |
+| Cloud Emulation | Floci (AWS Environment)|
 | Infrastructure as Code | Terraform |
 | Runtime | Python  |
 | API Layer | API Gateway |
@@ -106,27 +111,26 @@ Grafana Dashboard
 
 ```text
 CNM/
-│
 ├── assets/
 │   ├── diagram.png
-│   ├── grafana-dashboard.png
-│   └── traffic-simulator.png
-│   
+│   ├── floci.jpeg
+│   ├── get-req.jpeg
+│   ├── grafana-dashboard.jpeg
+│   ├── livedemo.mp4
+│   ├── post-req.jpeg
+│   └── traffic-simulator.jpeg
 ├── docker/
-│   └── docker-compose.yml
-│
+│   ├── docker-compose.yml
+│   └── prometheus.yml
 ├── src/
-│   └── lambdafunc.py
-│
+│   ├── lambdafunc.py
+│   └── requirements.txt
 ├── terraform/
 │   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
 │   └── provider.tf
-│
-├── traffic_simulate.ps1
-│
-└── README.md
+├── lambda.zip
+├── readme.md
+└── traffic_simulate.ps1
 ```
 
 ---
@@ -150,7 +154,7 @@ Install the following before running the project:
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/<repo-name>.git
+git clone https://github.com/chandra-64/CNM.git
 cd CNM
 ```
 
@@ -195,7 +199,11 @@ Terraform provisions:
 Example:
 
 ```text
-http://localhost:4566/_aws/execute-api/YOUR_API_ID/local/books
+API OUTPUT: fdf10b31dd
+```
+
+```text
+http://localhost:4566/_aws/execute-api/fdf10b31dd/local/books
 ```
 
 ---
@@ -250,9 +258,7 @@ Password: admin
 
 Open dashboard:
 
-```text
-AWS Serverless API Performance
-```
+![Grafana dashboard](assets/grafana-dashboard.jpeg)
 
 Recommended settings:
 
@@ -269,9 +275,9 @@ Recommended settings:
 
 ### Raw Metrics Pushed by Lambda
 
-- **api_requests_total (Counter):** Tracks every incoming request. It includes critical metadata tags (labels):
+- **api_requests_total:** Tracks every incoming request. 
 
-    * **Method:** POST (writes) vs. GET (reads).
+    * **Method:** POST (writes)  GET (reads).
 
     * **Status Code:** 200 (Success), 404 (Not Found/Handled), and 500 (Server Error).
 
@@ -285,13 +291,18 @@ Recommended settings:
 
 ---
 
-# 🔍 Example API Requests
+# 🔍 Example API Requests (Manual)
+
+## Set API ENV
+```bash
+$env:api = "http://localhost:4566/_aws/execute-api/your-api-id/local/books"
+```
 
 ## Create a Book
 
 ### Post-Request
 
-```
+```bash
 Invoke-RestMethod -Uri $api -Method Post -ContentType "application/json" -Body @{book_id="6"; title="Wings of Fire"; author="APJ Abdul Kalam"}
 ```
 
@@ -303,7 +314,7 @@ Invoke-RestMethod -Uri $api -Method Post -ContentType "application/json" -Body @
 
 ### Get-Request
 
-```
+```bash
 Invoke-RestMethod -Uri "$api/6" -Method Get
 ```
 
@@ -380,7 +391,7 @@ docker ps
 
  • Cloud Enthusiast
 
-GitHub: https://github.com/your-github-username
+GitHub: https://github.com/chandra-64
 
 ---
 
